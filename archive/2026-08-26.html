@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The I&amp;C Dispatch — 26 August 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --paper:#f7f4ec;
+    --ink:#1a1a1a;
+    --ink-soft:#3a3a3a;
+    --rule:#1a1a1a;
+    --rule-light:#c9c2ac;
+    --accent:#8a1f11;
+    --accent-soft:#a8511f;
+    --tag-bg:#1a1a1a;
+    --tag-ink:#f7f4ec;
+    --card-bg:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#ddd6c4;
+    color:var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    background:var(--paper);
+    padding:28px 40px 60px;
+    box-shadow:0 0 40px rgba(0,0,0,0.15);
+  }
+  /* Masthead */
+  .masthead-top{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:6px;
+  }
+  h1.masthead{
+    font-family:'Times New Roman', Georgia, serif;
+    font-weight:900;
+    font-size:64px;
+    text-align:center;
+    letter-spacing:1px;
+    margin:14px 0 2px;
+    line-height:1;
+  }
+  h1.masthead .amp{ color:var(--accent); font-style:italic; }
+  .tagline{
+    text-align:center;
+    font-size:13px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .masthead-rule{
+    border:none;
+    border-top:4px double var(--rule);
+    margin:8px 0 4px;
+  }
+  .masthead-bottom{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    padding:4px 0 10px;
+    border-bottom:2px solid var(--rule);
+    margin-bottom:18px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .masthead-bottom b{color:var(--ink);}
+
+  /* Section headers */
+  h2.section{
+    font-size:20px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    border-bottom:3px solid var(--rule);
+    padding-bottom:4px;
+    margin:38px 0 16px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+  }
+  h2.section span.kicker{
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    color:var(--accent);
+    text-transform:uppercase;
+  }
+
+  /* Lead story */
+  .lead{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:28px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--rule-light);
+    margin-bottom:10px;
+  }
+  .lead h3{
+    font-size:34px;
+    line-height:1.12;
+    margin:0 0 8px;
+  }
+  .dateline{
+    font-family:'Courier New', monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .lead p{ font-size:16px; line-height:1.55; color:var(--ink-soft); }
+  .lead .drop::first-letter{
+    font-size:52px;
+    float:left;
+    line-height:0.8;
+    padding-right:8px;
+    padding-top:4px;
+    font-weight:700;
+    color:var(--accent);
+  }
+  .pull-facts{
+    background:var(--card-bg);
+    border:1px solid var(--rule-light);
+    padding:16px 18px;
+    font-size:13px;
+  }
+  .pull-facts h4{
+    margin:0 0 10px;
+    font-family:'Courier New', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-size:12px;
+    border-bottom:1px solid var(--rule-light);
+    padding-bottom:6px;
+  }
+  .pull-facts ul{ margin:0; padding-left:18px; color:var(--ink-soft); }
+  .pull-facts li{ margin-bottom:7px; }
+
+  /* Story grid (multi-column briefs) */
+  .grid{
+    column-count:2;
+    column-gap:32px;
+  }
+  .story{
+    padding:14px 0 18px;
+    border-bottom:1px solid var(--rule-light);
+    break-inside:avoid;
+    -webkit-column-break-inside:avoid;
+    page-break-inside:avoid;
+  }
+  .story h4{
+    font-size:19px;
+    margin:0 0 4px;
+    line-height:1.25;
+  }
+  .story p{
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .story .src{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .story .src a{ color:var(--accent-soft); text-decoration:none; }
+  .story .src a:hover{ text-decoration:underline; }
+  .tag{
+    display:inline-block;
+    background:var(--tag-bg);
+    color:var(--tag-ink);
+    font-family:'Courier New', monospace;
+    font-size:9.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:2px 6px;
+    margin-bottom:6px;
+  }
+  .tag.watch{ background:var(--accent); }
+
+  /* Full-width single story (spans both newspaper columns) */
+  .story.full{
+    column-span:all;
+    -webkit-column-span:all;
+    display:block;
+    width:auto;
+  }
+
+  /* Portfolio watch box */
+  .watchbox{
+    background:var(--card-bg);
+    border:2px solid var(--ink);
+    padding:18px 20px;
+    margin:16px 0 30px;
+  }
+  .watchbox h3{
+    margin:0 0 10px;
+    font-size:16px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    border-bottom:1px solid var(--rule-light);
+    padding-bottom:8px;
+  }
+  .watch-item{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:14px;
+    padding:9px 0;
+    border-bottom:1px dotted var(--rule-light);
+    font-size:13.5px;
+  }
+  .watch-item:last-child{ border-bottom:none; }
+  .watch-item .co{ font-weight:700; }
+  .watch-item .status{ color:var(--ink-soft); }
+
+  footer{
+    margin-top:36px;
+    padding-top:14px;
+    border-top:3px double var(--rule);
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:center;
+    font-family:'Courier New', monospace;
+    letter-spacing:0.03em;
+  }
+  .no-news{
+    font-size:13px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width:720px){
+    .page{ padding:18px 16px 40px; }
+    h1.masthead{ font-size:38px; }
+    .lead{ grid-template-columns:1fr; }
+    .grid{ column-count:1; }
+    .watch-item{ grid-template-columns:1fr; gap:2px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead-top">
+    <span>Infrastructure &amp; Climate Portfolio Team</span>
+    <span>Internal Briefing — Not for External Distribution</span>
+  </div>
+
+  <h1 class="masthead">THE I<span class="amp">&amp;</span>C DISPATCH</h1>
+  <div class="tagline">Ports · Water · Power &amp; Minerals — News Across the I&amp;C Book</div>
+  <hr class="masthead-rule">
+  <div class="masthead-bottom">
+    <span><b>Edition No. 1</b> · Weekly Digest</span>
+    <span>Tuesday, <b>26 August 2026</b></span>
+    <span>Coverage window: <b>19–26 August 2026</b> (plus latest available on thinner-flow names)</span>
+  </div>
+
+  <!-- LEAD STORY -->
+  <h2 class="section"><span>Lead Story</span><span class="kicker">Ports &amp; Trade Routes</span></h2>
+  <div class="lead">
+    <div>
+      <div class="dateline">Cairo / Suez · Trade &amp; Logistics</div>
+      <h3>Suez Traffic Claws Back Toward Pre-Crisis Levels as Carriers Return — Sokhna Positioned to Benefit</h3>
+      <p class="drop">Suez Canal revenues hit $4.67bn in FY2025/26, up 23% year-on-year, as major carriers cautiously restore Red Sea routings nearly three years after the Houthi-driven disruption began. CMA CGM alone moved 199 vessels carrying 25.2 million tonnes through the canal in 2026 to date — already surpassing its full-year 2025 tonnage by roughly 34% — following an August 18 meeting between its leadership and the Suez Canal Authority. Maersk's CEO put the broader recovery at "about one-third" of normal Red Sea traffic, spread across four of thirteen services. Receipts remain roughly half the pre-disruption FY2022/23 record of $9.4bn, underlining how much runway remains.</p>
+      <p>For the I&amp;C book, the read-through is direct: DP World Sokhna sits at the mouth of this recovery. The terminal closed 2025 at a record 1 million TEU against 1.75 million TEU of combined basin capacity, and a fuller Suez recovery — plus SCZone's parallel push to court US and Asian logistics investment (117 new projects, $7.3bn committed in FY2025/26, 73,500 jobs pipeline) — points toward continued utilisation gains into FY2026/27, alongside residual risk from any resumption of Red Sea security incidents.</p>
+    </div>
+    <div class="pull-facts">
+      <h4>By the Numbers</h4>
+      <ul>
+        <li><b>$4.67bn</b> — Suez Canal FY2025/26 revenue, +23% YoY</li>
+        <li><b>1.0m TEU</b> — DP World Sokhna's record 2025 throughput</li>
+        <li><b>1.75m TEU</b> — Sokhna's combined basin capacity</li>
+        <li><b>34%</b> — CMA CGM's YoY increase in Suez tonnage</li>
+        <li><b>~50%</b> — Canal receipts vs. the FY2022/23 pre-crisis peak</li>
+        <li><b>$7.3bn</b> — New FY2025/26 investment into SCZone (117 projects)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PORTS & LOGISTICS -->
+  <h2 class="section"><span>Ports &amp; Logistics</span><span class="kicker">Sector Watch</span></h2>
+  <div class="grid">
+    <div class="story">
+      <span class="tag">Sector</span>
+      <h4>Global Container Ports Post Mixed H1 2026</h4>
+      <p>Major European gateways stagnated in H1 2026 — Rotterdam (7.02m TEU, -0.1%) and Antwerp-Bruges (6.8m TEU, -1.5%) were flat to down — while smaller emerging hubs outgrew them sharply: Cebu (+7.7%), Salerno (+6.2%) and Aqaba (+1%) all posted gains. Houston grew 3% in North America. The divergence suggests trade is diffusing toward secondary and regional hubs rather than concentrating in legacy gateways — relevant context for how Sokhna's East-West positioning competes for diverted volumes.</p>
+      <p class="src">Source: <a href="https://container-news.com/global-container-ports-report-mixed-results-in-first-half-of-2026/" target="_blank">Container News</a></p>
+    </div>
+    <div class="story">
+      <span class="tag">Sector</span>
+      <h4>SCZone Courts US Port-Technology Partners</h4>
+      <p>Egyptian and US officials met on August 24 to explore maritime infrastructure, cybersecurity and port-automation partnerships within the Suez Canal Economic Zone, alongside a broader push to localise 21 industrial sectors. East Port Said was cited as the top-ranked container port in Africa/Middle East on the World Bank's 2024 Container Port Performance Index — a useful benchmark for Sokhna's competitive set.</p>
+      <p class="src">Source: <a href="https://www.dailynewsegypt.com/2026/08/24/us-and-egyptian-officials-explore-port-partnerships-as-sczone-touts-expansion/" target="_blank">Daily News Egypt</a></p>
+    </div>
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — DP World Sokhna</span>
+      <h4>Record 2025 Throughput Confirmed; Logistics Park Fully Operational</h4>
+      <p>DP World Sokhna closed 2025 with record annual throughput of 1 million TEU across its three basins (1.75 million TEU combined capacity). The adjoining $85m Sokhna Logistics Park — Egypt's first fully integrated logistics distribution hub, roughly 10km from the port — is now live with bonded warehousing, customs clearance and container handling under one roof, and has since added new service agreements and handled its first passenger-vehicle export shipment. Combined with the Suez traffic recovery above, the asset is well placed heading into the next reporting period.</p>
+      <p class="src">Sources: <a href="https://www.worldcargonews.com/ports-terminals/2026/01/a-record-year-for-dp-world-sokhna/" target="_blank">WorldCargo News</a> · <a href="https://www.dpworld.com/en/news/dp-world-sokhna-handles-inaugural-passenger-vehicle-export" target="_blank">DP World</a> · <a href="https://www.egypttoday.com/Article/3/148115/DP-World-Sokhna-Logistics-Park-expands-services-through-three-new" target="_blank">Egypt Today</a></p>
+    </div>
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — DP World ENAF</span>
+      <p class="no-news">No distinct operational news this period.</p>
+    </div>
+  </div>
+
+  <!-- WATER -->
+  <h2 class="section"><span>Water Supply &amp; Infrastructure</span><span class="kicker">Sector Watch</span></h2>
+  <div class="grid">
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — Africa Water Infrastructure Development (AWID)</span>
+      <h4>Naivasha SEZ Bulk Water Project Remains AWID's Most Recent Disclosed Mandate</h4>
+      <p>AWID — the platform BII co-founded with Metito in December 2023 to build a commercial model for water investment in Africa — joined a consortium on Kenya's Naivasha Special Economic Zone bulk water supply project, which received formal approval as a Privately Initiated Proposal from Kenya's PPP Directorate. This remains the most recent disclosed AWID-specific mandate; no newer press releases were found in this window, which itself is a useful data point on the platform's public disclosure cadence.</p>
+      <p class="src">Sources: <a href="https://www.awidco.com/newsroom/" target="_blank">AWID Newsroom</a> · <a href="https://www.bii.co.uk/en/news-insight/news/africa-receives-investment-boost-to-develop-water-infrastructure/" target="_blank">BII</a> · <a href="https://impact-investor.com/metito-and-bii-join-forces-to-improve-africas-water-infrastructure/" target="_blank">Impact Investor</a></p>
+    </div>
+    <div class="story">
+      <span class="tag">Sector</span>
+      <h4>BII–Africa50 MoU Names Water &amp; Sanitation a Priority Vertical</h4>
+      <p>BII's new infrastructure partnership (see Portfolio Watch, below) explicitly names water and sanitation alongside power and transport as target sectors for the $330m Africa50 Infrastructure Acceleration Fund — a signal of continued capital availability for AWID-adjacent water platforms across the continent.</p>
+      <p class="src">Source: <a href="https://www.bii.co.uk/en/news-insight/news/british-international-investment-and-africa50-join-forces-to-mobilise-investment-into-africas-infrastructure/" target="_blank">BII</a></p>
+    </div>
+    <div class="story">
+      <span class="tag">Sector</span>
+      <h4>Desalination Demand Cited as Structural Growth Driver</h4>
+      <p>Industry trackers continue to flag rising freshwater scarcity across the Middle East and Africa as the core driver of desalination capacity build-out, with market-sizing estimates (directional, vendor-sourced) pointing to the segment roughly doubling in value over the next several years. Useful macro backdrop for water-infrastructure exits and follow-on capital planning, though figures should be treated as indicative rather than audited.</p>
+      <p class="src">Source: <a href="https://smartwatermagazine.com/middle-east-africa" target="_blank">Smart Water Magazine</a></p>
+    </div>
+  </div>
+
+  <!-- POWER & MINERALS -->
+  <h2 class="section"><span>Power, Energy &amp; Minerals</span><span class="kicker">Sector Watch</span></h2>
+  <div class="grid">
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — Globeleq</span>
+      <h4>Cameroon Government Moves to Take Control of Two Globeleq-Majority Plants</h4>
+      <p>Cameroon's government is negotiating an estimated CFA80bn (~$135m) buyout of Globeleq's 56% stakes in the Kribi (216MW gas-fired) and Dibamba (88MW heavy fuel oil) plants, together over a fifth of capacity on the Southern Interconnected Grid. The move follows the state exercising a pre-emptive right in July 2025; talks were reported as ongoing on August 10 with a target close before year-end. State distributor Socadel currently pays close to CFA8bn/month for this power — the government projects CFA36bn in annual savings post-acquisition. This is a live divestment risk/opportunity for the I&amp;C book worth flagging to the valuation and portfolio teams directly.</p>
+      <p class="src">Source: <a href="https://www.businessincameroon.com/energy/1008-16577-cameroon-weighs-cfa80-billion-deal-to-take-control-of-two-key-power-plants" target="_blank">Business in Cameroon</a></p>
+    </div>
+    <div class="story">
+      <span class="tag watch">Portfolio Company — Globeleq</span>
+      <h4>Zambia Build-Out Continues: $315m Solar-Battery Plant, Lunsemfwa Hydro</h4>
+      <p>Elsewhere in the portfolio, Globeleq is pressing ahead with diversification: a confirmed majority-stake acquisition in Zambia's Lunsemfwa Hydro Power Company, a $315m solar-plus-battery storage project (Bloomberg, April 2026), and continued advancement of a third 35MW geothermal unit at Menengai, Kenya. Zambia is described internally as a "priority market."</p>
+      <p class="src">Sources: <a href="https://www.bloomberg.com/news/articles/2026-04-22/globeleq-to-build-315-million-solar-battery-plant-in-zambia" target="_blank">Bloomberg</a> · <a href="https://www.africa-energy.com/news-centre/article/globeleq-invests-hydro-solar-and-bess-priority-market-zambia" target="_blank">African Energy</a> · <a href="https://www.thinkgeoenergy.com/globeleq-advances-third-menengai-35-mw-geothermal-project/" target="_blank">ThinkGeoEnergy</a></p>
+    </div>
+    <div class="story">
+      <span class="tag watch">Portfolio Company — H1 Capital</span>
+      <p class="no-news">No distinct news this period.</p>
+    </div>
+    <div class="story">
+      <span class="tag watch">Portfolio Company — GSEZ Minerals</span>
+      <p class="no-news">No distinct news this period.</p>
+    </div>
+    <div class="story">
+      <span class="tag">Sector</span>
+      <h4>Ghana Manganese Targets Record 700,000t in August</h4>
+      <p>Ghana Manganese Company — sole producer/exporter of the mineral nationally, targeting 8m tonnes/year from its Nsuta open-pit mine — guided to a record 700,000t for August 2026 on improved weather and newly commissioned equipment, with over 70% of output already destined for the EU. A reminder of the export-logistics demand feeding West/Central African port capacity generally.</p>
+      <p class="src">Sources: <a href="https://www.citinewsroom.com/2026/08/ghana-manganese-company-targets-record-700000-tonnes-in-august/" target="_blank">Citi Newsroom</a> · <a href="https://www.riotimesonline.com/ghana-manganese-miner-targets-700000-tonnes-in-august-push/" target="_blank">Rio Times</a></p>
+    </div>
+    <div class="story">
+      <span class="tag">Sector</span>
+      <h4>Africa's Critical-Minerals Position Still Dominant, Still Contested</h4>
+      <p>Africa holds outsized reserve shares across platinum group metals (79.3%), cobalt (54.5%), manganese (36.5%) and bauxite (25.5%), but faces headwinds: a 6.4% platinum production decline forecast for 2025 (South African weather/restructuring) and a 50% US tariff on copper imports effective August 2025. Guinea's Simandou iron-ore megaproject ($26bn+ invested) remains the region's flagship infrastructure-linked mining story.</p>
+      <p class="src">Source: <a href="https://www.mining-technology.com/analyst-comment/africa-mining-sector-critical-minerals-policy-reforms/" target="_blank">Mining Technology</a></p>
+    </div>
+  </div>
+
+  <!-- BII / PORTFOLIO WATCH -->
+  <h2 class="section"><span>Portfolio Watch</span><span class="kicker">BII &amp; House News</span></h2>
+  <div class="watchbox">
+    <h3>BII Signs MoU With Africa50, Commits $20m to Infrastructure Acceleration Fund</h3>
+    <div class="watch-item">
+      <div class="co">Announced</div>
+      <div class="status">11 August 2026, at the Infra for Africa Forum, Tanzania</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">Commitment</div>
+      <div class="status">$20m into the Africa50 Infrastructure Acceleration Fund, taking its fourth close to ~$330m</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">Priority sectors</div>
+      <div class="status">Power &amp; energy · Water &amp; sanitation · Transport &amp; logistics · Digital &amp; social infrastructure</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">Quote</div>
+      <div class="status">Leslie Maasdorp (BII CEO): "Africa's infrastructure financing gap remains one of the biggest barriers to sustainable growth and development."</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">Why it matters</div>
+      <div class="status">Directly touches three of this edition's four sector buckets (power, water, ports/transport) — likely upstream of future co-investment or pipeline referrals into names like Globeleq, AWID and DP World-adjacent logistics plays.</div>
+    </div>
+    <p class="src" style="margin-top:10px;">Source: <a href="https://www.bii.co.uk/en/news-insight/news/british-international-investment-and-africa50-join-forces-to-mobilise-investment-into-africas-infrastructure/" target="_blank">British International Investment</a></p>
+  </div>
+
+  <footer>
+    Compiled by web research across public sources for the BII Infrastructure &amp; Climate portfolio team · Coverage window 19–26 August 2026, with older items on thinner-flow names dated explicitly · Internal use only — not verified against BII's non-public deal data · Edition No. 1
+  </footer>
+
+</div>
+</body>
+</html>
