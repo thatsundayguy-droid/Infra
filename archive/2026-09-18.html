@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The I&amp;C Dispatch — 18 September 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --paper:#f7f4ec;
+    --ink:#1a1a1a;
+    --ink-soft:#3a3a3a;
+    --rule:#1a1a1a;
+    --rule-light:#c9c2ac;
+    --accent:#8a1f11;
+    --accent-soft:#a8511f;
+    --tag-bg:#1a1a1a;
+    --tag-ink:#f7f4ec;
+    --card-bg:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#ddd6c4;
+    color:var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    background:var(--paper);
+    padding:28px 40px 60px;
+    box-shadow:0 0 40px rgba(0,0,0,0.15);
+  }
+  .masthead-top{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:6px;
+  }
+  h1.masthead{
+    font-family:'Times New Roman', Georgia, serif;
+    font-weight:900;
+    font-size:64px;
+    text-align:center;
+    letter-spacing:1px;
+    margin:14px 0 2px;
+    line-height:1;
+  }
+  h1.masthead .amp{ color:var(--accent); font-style:italic; }
+  .tagline{
+    text-align:center;
+    font-size:13px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:10px;
+  }
+  .masthead-rule{
+    border:none;
+    border-top:4px double var(--rule);
+    margin:8px 0 4px;
+  }
+  .masthead-bottom{
+    display:flex;
+    justify-content:space-between;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    padding:4px 0 10px;
+    border-bottom:2px solid var(--rule);
+    margin-bottom:18px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .masthead-bottom b{color:var(--ink);}
+  h2.section{
+    font-size:20px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    border-bottom:3px solid var(--rule);
+    padding-bottom:4px;
+    margin:38px 0 16px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+  }
+  h2.section span.kicker{
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    color:var(--accent);
+    text-transform:uppercase;
+  }
+  .lead{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:28px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--rule-light);
+    margin-bottom:10px;
+  }
+  .lead h3{
+    font-size:34px;
+    line-height:1.12;
+    margin:0 0 8px;
+  }
+  .dateline{
+    font-family:'Courier New', monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .lead p{ font-size:16px; line-height:1.55; color:var(--ink-soft); }
+  .lead .drop::first-letter{
+    font-size:52px;
+    float:left;
+    line-height:0.8;
+    padding-right:8px;
+    padding-top:4px;
+    font-weight:700;
+    color:var(--accent);
+  }
+  .pull-facts{
+    background:var(--card-bg);
+    border:1px solid var(--rule-light);
+    padding:16px 18px;
+    font-size:13px;
+  }
+  .pull-facts h4{
+    margin:0 0 10px;
+    font-family:'Courier New', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-size:12px;
+    border-bottom:1px solid var(--rule-light);
+    padding-bottom:6px;
+  }
+  .pull-facts ul{ margin:0; padding-left:18px; color:var(--ink-soft); }
+  .pull-facts li{ margin-bottom:7px; }
+  .grid{
+    column-count:2;
+    column-gap:32px;
+  }
+  .story{
+    padding:14px 0 18px;
+    border-bottom:1px solid var(--rule-light);
+    break-inside:avoid;
+    -webkit-column-break-inside:avoid;
+    page-break-inside:avoid;
+  }
+  .story h4{
+    font-size:19px;
+    margin:0 0 4px;
+    line-height:1.25;
+  }
+  .story p{
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .story .src{
+    font-size:11.5px;
+    color:var(--ink-soft);
+  }
+  .story .src a{ color:var(--accent-soft); text-decoration:none; }
+  .story .src a:hover{ text-decoration:underline; }
+  .tag{
+    display:inline-block;
+    background:var(--tag-bg);
+    color:var(--tag-ink);
+    font-family:'Courier New', monospace;
+    font-size:9.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:2px 6px;
+    margin-bottom:6px;
+  }
+  .tag.watch{ background:var(--accent); }
+  .story.full{
+    column-span:all;
+    -webkit-column-span:all;
+    display:block;
+    width:auto;
+  }
+  .watchbox{
+    background:var(--card-bg);
+    border:2px solid var(--ink);
+    padding:18px 20px;
+    margin:16px 0 30px;
+  }
+  .watchbox h3{
+    margin:0 0 10px;
+    font-size:16px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    border-bottom:1px solid var(--rule-light);
+    padding-bottom:8px;
+  }
+  .watch-item{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:14px;
+    padding:9px 0;
+    border-bottom:1px dotted var(--rule-light);
+    font-size:13.5px;
+  }
+  .watch-item:last-child{ border-bottom:none; }
+  .watch-item .co{ font-weight:700; }
+  .watch-item .status{ color:var(--ink-soft); }
+  .quarter-intro{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--rule-light);
+  }
+  .quarter-sub{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-family:'Courier New', monospace;
+    color:var(--accent);
+    margin:26px 0 10px;
+  }
+  footer{
+    margin-top:36px;
+    padding-top:14px;
+    border-top:3px double var(--rule);
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:center;
+    font-family:'Courier New', monospace;
+    letter-spacing:0.03em;
+  }
+  .no-news{
+    font-size:13px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+  @media (max-width:720px){
+    .page{ padding:18px 16px 40px; }
+    h1.masthead{ font-size:38px; }
+    .lead{ grid-template-columns:1fr; }
+    .grid{ column-count:1; }
+    .watch-item{ grid-template-columns:1fr; gap:2px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead-top">
+    <span>Infrastructure &amp; Climate Portfolio Team</span>
+    <span>Internal Briefing — Not for External Distribution</span>
+  </div>
+
+  <h1 class="masthead">THE I<span class="amp">&amp;</span>C DISPATCH</h1>
+  <div class="tagline">Ports · Water · Power &amp; Minerals — News Across the I&amp;C Book</div>
+  <hr class="masthead-rule">
+  <div class="masthead-bottom">
+    <span><b>Edition No. 5</b> · Weekly Digest</span>
+    <span>Friday, <b>18 September 2026</b></span>
+    <span>Coverage window: <b>12–18 September 2026</b> · plus updated <b>Q3 2026 recap</b> below</span>
+  </div>
+
+  <!-- LEAD STORY -->
+  <h2 class="section"><span>Lead Story</span><span class="kicker">Ports &amp; Trade Routes</span></h2>
+  <div class="lead">
+    <div>
+      <div class="dateline">Sanaa / Bab el-Mandeb · Trade &amp; Logistics</div>
+      <h3>Bab el-Mandeb Traffic Collapses 88% as Hormuz Also Grinds to a Halt — Both Chokepoints Now Near-Zero at Once</h3>
+      <p class="drop">Shipping through the Bab el-Mandeb Strait came to a near-standstill this week: just four vessels transited in the 24 hours to 17 September, against a daily average of 33 — an 88% drop, per IMF PortWatch data cited by Anadolu. Oil and chemical tanker passage fell 91%, with only one tanker making the crossing; container ship traffic was down 86%. The few vessels that did transit flew the flags of Panama, Singapore, Liberia and Ethiopia. The collapse follows the Houthis' capture of Mokha, the Hanish archipelago, Mayun (Perim) island and Dhubab over the past week, giving the group control of the Yemeni side of the strait for the first time.</p>
+      <p>The Strait of Hormuz shows a similar picture: shipping data reviewed by RFE/RL put recent Hormuz crossings at just four vessels in a 24-hour period, against a pre-war baseline of roughly 125 vessels a day. For the first time since this crisis began in February, both of the Middle East's major chokepoints are reporting traffic near zero simultaneously. Bab el-Mandeb normally carries an estimated 10% of global maritime trade and 12% of seaborne crude; with Saudi Arabia's Red Sea alternative to Hormuz now itself effectively blocked, pressure shifts further onto the Cape of Good Hope route and, for Mediterranean-origin cargo not dependent on Bab el-Mandeb, onto Suez traffic from the north. We could not confirm a Suez-specific transit count for this exact week as of publication — a priority check for next edition.</p>
+    </div>
+    <div class="pull-facts">
+      <h4>By the Numbers</h4>
+      <ul>
+        <li><b>88%</b> — drop in Bab el-Mandeb traffic, 24 hrs to 17 Sep (avg. 33/day → 4)</li>
+        <li><b>91%</b> — drop in oil/chemical tanker transits through Bab el-Mandeb (1 tanker in 24h)</li>
+        <li><b>86%</b> — drop in container ship traffic through Bab el-Mandeb</li>
+        <li><b>4</b> — vessels through Hormuz in a recent 24-hour period</li>
+        <li><b>~125/day</b> — pre-war Hormuz baseline (RFE/RL)</li>
+        <li><b>10% / 12%</b> — share of global maritime trade / seaborne crude normally via Bab el-Mandeb</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PORTS & LOGISTICS -->
+  <h2 class="section"><span>Ports &amp; Logistics</span><span class="kicker">Sector Watch</span></h2>
+  <div class="grid">
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — DP World Sokhna</span>
+      <p class="no-news">No distinct operational news this period beyond the sector-wide developments covered in the lead story. See the Portfolio Watch box below for a risk note specific to this book.</p>
+    </div>
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — DP World ENAF</span>
+      <p class="no-news">No distinct operational news this period.</p>
+    </div>
+  </div>
+
+  <!-- WATER -->
+  <h2 class="section"><span>Water Supply &amp; Infrastructure</span><span class="kicker">Sector Watch</span></h2>
+  <div class="grid">
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — Africa Water Infrastructure Development (AWID)</span>
+      <p class="no-news">No new AWID-specific news found this period; the Naivasha SEZ bulk water project remains its most recent disclosed mandate (see Edition No. 1).</p>
+    </div>
+  </div>
+
+  <!-- POWER & MINERALS -->
+  <h2 class="section"><span>Power, Energy &amp; Minerals</span><span class="kicker">Sector Watch</span></h2>
+  <div class="grid">
+    <div class="story">
+      <span class="tag watch">Portfolio Company — Globeleq</span>
+      <p class="no-news">No change to the Cameroon situation since Edition No. 3: still no formal offer transmitted on the CFA80bn (~$135m) Kribi/Dibamba buyout as of the most recent reporting.</p>
+    </div>
+    <div class="story">
+      <span class="tag watch">Portfolio Company — H1 Capital</span>
+      <p class="no-news">No distinct news this period.</p>
+    </div>
+    <div class="story full">
+      <span class="tag watch">Portfolio Company — GSEZ Minerals</span>
+      <p class="no-news">No distinct news this period.</p>
+    </div>
+  </div>
+
+  <!-- BII / PORTFOLIO WATCH -->
+  <h2 class="section"><span>Portfolio Watch</span><span class="kicker">BII &amp; House News</span></h2>
+  <div class="watchbox">
+    <h3>DP World Sokhna: Portfolio Exposure Note</h3>
+    <div class="watch-item">
+      <div class="co">No new deal news</div>
+      <div class="status">This isn't a house announcement — it's a flag that today's lead story is the sharpest test yet of the Sokhna thesis running through Editions No. 1–4</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">The mechanism</div>
+      <div class="status">Sokhna's upside case has rested on continued Suez recovery. With both Hormuz and, now, Bab el-Mandeb near-zero simultaneously, the near-term composition of Suez traffic (northbound Mediterranean-origin vs. southbound Red Sea-origin) is worth understanding before leaning further on the "Suez recovery" narrative</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">Offsetting factor</div>
+      <div class="status">The Logistics Park's phase-two tenant wins (Edition No. 4) are a real, company-specific data point that doesn't depend on the chokepoint situation resolving</div>
+    </div>
+    <div class="watch-item">
+      <div class="co">Why it matters</div>
+      <div class="status">Worth a short conversation with the deal team on whether Sokhna's near-term volume assumptions need revisiting, independent of the medium-term thesis</div>
+    </div>
+  </div>
+
+  <!-- QUARTERLY RECAP -->
+  <h2 class="section"><span>This Quarter in the I&amp;C Book</span><span class="kicker">Q3 2026 Recap · 1 Jul–18 Sep</span></h2>
+  <p class="quarter-intro">This week marks the sharpest point yet in the chokepoint crisis that has defined Q3: both Hormuz and Bab el-Mandeb are now reporting traffic near zero at the same time, a first since the crisis began in February. That geopolitical backdrop continues to dominate the ports bucket; on the company side, Globeleq's Cameroon exit remains the quarter's clearest confirmed divestment, and Sokhna's logistics park phase-two tenant signings (corrected into our record in Edition No. 4) are the clearest positive company-specific data point.</p>
+
+  <div class="quarter-sub">Exits &amp; New Investments This Quarter</div>
+  <div class="grid">
+    <div class="story full">
+      <span class="tag watch">Exit in progress — Globeleq (Cameroon)</span>
+      <p>Unchanged this period. Globeleq has been working to divest its 56% stakes in Kribi Power Development Company and Dibamba Power Development Company since at least October 2025 — first via international buyers, now via a CFA80bn (~$135m) government buyout under negotiation since the state exercised a pre-emptive right in July 2025. A June 2026 fiscal dispute (account freeze, grid-capacity withdrawal affecting ~40% of Littoral/West consumers) added urgency. No formal offer had been transmitted as of the most recent reporting; a close before year-end remains the stated expectation.</p>
+    </div>
+    <div class="story full">
+      <span class="tag">Adjacent — BII–Africa50 Infrastructure Acceleration Fund</span>
+      <p>Unchanged this period. BII's $20m commitment to the Africa50 Infrastructure Acceleration Fund (11 August) took the fund to a fourth close of ~$330m; its priority sectors overlap directly with this book and could be a source of future co-investment or pipeline referrals.</p>
+    </div>
+    <div class="story full">
+      <p class="no-news">No other confirmed or reported exits or new investments were found this quarter for DP World Sokhna, DP World ENAF, AWID, H1 Capital, or GSEZ Minerals.</p>
+    </div>
+  </div>
+
+  <div class="quarter-sub">Company Recap</div>
+  <div class="grid">
+    <div class="story">
+      <span class="tag watch">DP World Sokhna</span>
+      <p>Closed 2025 at a record 1m TEU against 1.75m TEU of capacity. The Logistics Park's second phase launched 1 July 2026 with three named tenants. Benefited through most of Q3 from the Hormuz-driven Suez recovery, but this week's near-simultaneous collapse in both Hormuz and Bab el-Mandeb traffic is the sharpest test yet of that tailwind — worth revisiting near-term volume assumptions.</p>
+    </div>
+    <div class="story">
+      <span class="tag watch">DP World ENAF</span>
+      <p>No distinct operational news disclosed at any point during Q3.</p>
+    </div>
+    <div class="story">
+      <span class="tag watch">AWID</span>
+      <p>No new mandates disclosed beyond the Naivasha SEZ bulk water project, whose PIP approval predates this quarter. BII's Africa50 MoU (11 August) named water and sanitation a priority vertical for adjacent capital.</p>
+    </div>
+    <div class="story full">
+      <span class="tag watch">Globeleq</span>
+      <p>See "Exits &amp; New Investments" above for the Cameroon situation. Separately, continued Zambia build-out through the quarter: the completed Lunsemfwa Hydro majority-stake acquisition, the $315m solar-battery project, and advancement of a third geothermal unit at Menengai, Kenya. Zambia hosted the Africa Critical Minerals Conference on 15–16 September.</p>
+    </div>
+    <div class="story">
+      <span class="tag watch">H1 Capital</span>
+      <p>No distinct news disclosed during Q3. BII's public portfolio page shows one active and one exited investment in the company.</p>
+    </div>
+    <div class="story">
+      <span class="tag watch">GSEZ Minerals</span>
+      <p>No distinct news disclosed during Q3. The Gabon Mineral Port's capacity has more than tripled from its original 2m-tonne design to roughly 7m tonnes and is reported operating near full capacity, per the most recent public data available (DFC).</p>
+    </div>
+  </div>
+
+  <footer>
+    Compiled by web research across public sources for the BII Infrastructure &amp; Climate portfolio team · Weekly coverage window 12–18 September 2026; quarterly recap covers 1 July–18 September 2026 · Internal use only — not verified against BII's non-public deal data · Edition No. 5
+  </footer>
+
+</div>
+</body>
+</html>
